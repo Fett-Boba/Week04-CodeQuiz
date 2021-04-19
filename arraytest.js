@@ -34,8 +34,8 @@ var questionContainer = document.querySelector("#questionContainer");
 var startContainer = document.querySelector("#startContainer");
 var displayTimer = document.querySelector("#displayTimer");
 var secondsLeft = 100;
-var i=0;
-var j=0;
+var i = 0;
+var j = 0;
 
 function startQuiz(event) {
     event.preventDefault();
@@ -50,31 +50,31 @@ function startQuiz(event) {
 
     startContainer.classList.add("hidden");
     questionContainer.classList.remove("hidden");
+    displayQuestion();
+}
 
-    //for (i = 0; i < questions.length; i++) {
+function displayQuestion() {
+    console.log(questions.length);
+    if (i < questions.length) {
         txtOutQuestion.value = questions[i].question;
-        
         for (j = 0; j < questions[i].choices.length; j++) {
             var button = document.createElement('button');
             button.textContent = questions[i].choices[j];
             buttonContainer.appendChild(button);
         };
-    //};
+    } else {
+        console.log("end of game");
+    }
 }
 
-
-
 function checkAnswer(event) {
-    console.log("in checkanswer");
-    console.log(event.target.outerText);
-
-    console.log("answer: " + questions[i].answer);
-
     if (event.target.outerText === questions[i].answer) {
         console.log("right answer !!!!!");
     } else {
         console.log("NOPE");
     }
+    i++;
+    displayQuestion();
 }
 
 startButton.addEventListener("click", startQuiz);
