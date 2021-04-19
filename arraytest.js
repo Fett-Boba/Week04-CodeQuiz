@@ -1,3 +1,13 @@
+var txtOutQuestion = document.querySelector("#txtOutQuestion");
+var buttonContainer = document.querySelector("#buttonContainer");
+var startButton = document.querySelector("#startButton");
+var questionContainer = document.querySelector("#questionContainer");
+var startContainer = document.querySelector("#startContainer");
+var displayTimer = document.querySelector("#displayTimer");
+var secondsLeft = 30;
+var qnum = 0;
+var button;
+
 var questions = [
     {
         question: "What did fans name The Child?",
@@ -26,17 +36,6 @@ var questions = [
     }
 ];
 
-var txtOutQuestion = document.querySelector("#txtOutQuestion");
-var buttonContainer = document.querySelector("#buttonContainer");
-
-var startButton = document.querySelector("#startButton");
-var questionContainer = document.querySelector("#questionContainer");
-var startContainer = document.querySelector("#startContainer");
-var displayTimer = document.querySelector("#displayTimer");
-var secondsLeft = 100;
-var i = 0;
-var j = 0;
-
 function startQuiz(event) {
     event.preventDefault();
     var timerInterval = setInterval(function () {
@@ -54,12 +53,11 @@ function startQuiz(event) {
 }
 
 function displayQuestion() {
-    console.log(questions.length);
-    if (i < questions.length) {
-        txtOutQuestion.value = questions[i].question;
-        for (j = 0; j < questions[i].choices.length; j++) {
-            var button = document.createElement('button');
-            button.textContent = questions[i].choices[j];
+    if (qnum < questions.length) {
+        txtOutQuestion.value = questions[qnum].question;
+        for (var j = 0; j < questions[qnum].choices.length; j++) {
+            button = document.createElement('button');
+            button.textContent = questions[qnum].choices[j];
             buttonContainer.appendChild(button);
         };
     } else {
@@ -68,13 +66,20 @@ function displayQuestion() {
 }
 
 function checkAnswer(event) {
-    if (event.target.outerText === questions[i].answer) {
+    if (event.target.outerText === questions[qnum].answer) {
         console.log("right answer !!!!!");
     } else {
         console.log("NOPE");
     }
-    i++;
+    clearButtons();
+    qnum++;
     displayQuestion();
+}
+
+function clearButtons() {
+    while (buttonContainer.firstChild) {
+        buttonContainer.removeChild(buttonContainer.firstChild);
+    }
 }
 
 startButton.addEventListener("click", startQuiz);
