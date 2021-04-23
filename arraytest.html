@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
     <div id="displayTimer"></div>
 
     <div id="startContainer">
       <h1>Mandalorian Trivia Game</h1>
-      <p>You have 30 seconds to test your Mandalorian knowledge</p>
+      <h2>You have 30 seconds to test your Mandalorian knowledge</p>
       <button id="startButton">Start Quiz</button>
     </div>
 
@@ -21,6 +21,21 @@
       <div id="buttonContainer"></div>
     </div>
 
-    <script src="arraytest.js"></script>
+
+    <div class="hidden" id="gameOverContainer">
+      <p>Game Over.  Please enter your initials:<br>
+        <input type="text" id="initials" size="80" /><br>
+        <button id="saveHiScoreButton">Submit</button>
+      </p>
+    </div>
+
+    <div class="hidden" id="hiScoresContainer">
+      <p>High Scores</p>
+      <div id="txtOutHiScores"></div><br>
+      <button id="clearHiScoresBtn">Clear</button>
+      <button id="restartQuizBtn">Restart</button>
+    </div>
+
+    <script src="./assets/js/arraytest.js"></script>
   </body>
 </html>

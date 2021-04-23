@@ -43,6 +43,7 @@ function startQuiz(event) {
         if (secondsLeft === 0) {
             console.log("game over");
             clearInterval(timerInterval);
+            break;
         }
     }   ,1000);
 
