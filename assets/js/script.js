@@ -9,85 +9,58 @@ var initials = document.querySelector("#initials");
 var restartQuizBtn = document.querySelector("#restartQuizBtn");
 var clearHiScoresBtn = document.querySelector("#clearHiScoresBtn");
 var txtOutHiScores = document.querySelector("#txtOutHiScores");
+var scorePtext = document.querySelector("#scorePtext");
 
-var secondsLeft = 30;
+var secondsLeft = 60;
 var qnum = 0;
 var button;
 var score = 0;
 var hiScores = [];
 var scoreOut;
 
-// Whoops! I just noticed TODAY it was supposed to be JS questions, but thought I would keep it like this for your entertainment
-// var questions = [
-//     {
-//         question: "What did fans name The Child?",
-//         choices: ["Baby Mandalorian", "Baby Jabba", "Baby Yoda", "Baby Groot"],
-//         answer: "Baby Yoda"
-//     },
-//     {
-//         question: "What is The Childs real name?",
-//         choices: ["Smeagol", "Rocket", "Chucky", "Grogu"],
-//         answer: "Grogu"
-//     },
-//     {
-//         question: "What is The Mandalorians name?",
-//         choices: ["Din Djarin", "Greef Karga", "Fennec Shand", "He has no name"],
-//         answer: "Din Djarin"
-//     },
-//     {
-//         question: "What is The Mandalorians armor made of?",
-//         choices: ["Carbonite", "Beskar", "Mithril", "Duriam"],
-//         answer: "Beskar"
-//     },
-//     {
-//         question: "What is the name of The Mandalorians ship?",
-//         choices: ["Razor Crest", "Millenium Falcon", "Enterprise", "Ebon Hawk"],
-//         answer: "Razor Crest"
-//     }
-// ];
-
-
 var questions = [
     {
-        question: "What did fans name The Child?",
-        choices: ["Baby Mandalorian", "Baby Jabba", "Baby Yoda"],
-        answer: "Baby Yoda"
+        question: "What HTML element do we use to point to our script?",
+        choices: ["<scripting>", "<script>", "<javascript>", "<js>"],
+        answer: "<script>"
     },
     {
-        question: "What is The Childs real name?",
-        choices: ["Smeagol", "Rocket", "Chucky", "Grogu"],
-        answer: "Grogu"
+        question: "Where can you insert your JavaScripts?",
+        choices: ["<body>", "<head>", "Both"],
+        answer: "Both"
     },
     {
-        question: "What is The Mandalorians name?",
-        choices: ["Din Djarin", "Greef Karga", "Fennec Shand", "He has no name"],
-        answer: "Din Djarin"
+        question: "How do you call a function?",
+        choices: ["call myFunction()", "call function(myFunction)", "myFunction()", "call myFunction()"],
+        answer: "myFunction()"
     },
     {
-        question: "What is The Mandalorians armor made of?",
-        choices: ["Carbonite", "Beskar", "Mithril", "Duriam"],
-        answer: "Beskar"
+        question: "The external JavaScript file must contain the <script> tag?",
+        choices: ["True", "False"],
+        answer: "False"
     },
     {
-        question: "What is the name of The Mandalorians ship?",
-        choices: ["Razor Crest", "Millenium Falcon", "Enterprise", "Ebon Hawk"],
-        answer: "Razor Crest"
+        question: "How do you add a comment in JavaScript?",
+        choices: ["// comment", "<!-- comment -->", "# comment"],
+        answer: "// comment"
     }
 ];
 
 //Start the clock, and display first question 
 function startQuiz(event) {
     event.preventDefault();
+    displayTimer.textContent = "Time: " + secondsLeft;
+
     var timerInterval = setInterval(function () {
         secondsLeft--;
-        displayTimer.textContent = secondsLeft;
+        displayTimer.textContent = "Time: " + secondsLeft;
+        
         // When time is up or all questions answered the quiz is over
-        if (secondsLeft === 0 || qnum === questions.length) {
+        if (secondsLeft <= 0 || qnum === questions.length) {
             clearInterval(timerInterval);
             clearButtons();
             questionContainer.classList.add("hidden");
             gameOverContainer.classList.remove("hidden");
-            displayTimer.textContent = "";
         };
     }, 1000);
     startContainer.classList.add("hidden");
@@ -103,6 +76,8 @@ function displayQuestion() {
             button = document.createElement('button');
             button.textContent = questions[qnum].choices[j];
             buttonContainer.appendChild(button);
+            var br = document.createElement('br');
+            buttonContainer.appendChild(br);
         };
     } else {
         questionContainer.classList.add("hidden");
@@ -112,8 +87,12 @@ function displayQuestion() {
 
 //Check for correct answer, update score if correct, and display next question
 function checkAnswer(event) {
+    var correct;
     if (event.target.outerText === questions[qnum].answer) {
         score++;
+        scorePtext.innerText ="Score: " + score + "/5";
+    } else {
+        secondsLeft = secondsLeft -10;
     }
     clearButtons();
     qnum++;
@@ -174,10 +153,12 @@ function resetForNewQuiz() {
     gameOverContainer.classList.add("hidden");
     questionContainer.classList.add("hidden");
     startContainer.classList.remove("hidden");
-    secondsLeft = 30;       //reset clock
+    secondsLeft = 60;       //reset clock
     qnum = 0;               //reset question number back to 0
     score = 0;              //reset score
+    scorePtext.innerText ="Score: " + score + "/5";
     initials.value = "";    //clear initials
+    displayTimer.textContent = "";
 }
 
 // Listeners
@@ -186,5 +167,3 @@ buttonContainer.addEventListener("click", checkAnswer);
 saveHiScoreButton.addEventListener("click", saveHiScore);
 restartQuizBtn.addEventListener("click", restartQuiz);
 clearHiScoresBtn.addEventListener("click", clearHiScores);
-
-
