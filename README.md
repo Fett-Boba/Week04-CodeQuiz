@@ -18,7 +18,7 @@ A timed JavaScript code quiz to test your knowledge, that keeps track of your sc
 
 ## Link to deployed application
 
-[GitHub](https://fett-boba.github.io/Week03-PasswordGenerator/) https://fett-boba.github.io/Week03-PasswordGenerator/
+[GitHub](https://fett-boba.github.io/Week04-CodeQuiz/) https://fett-boba.github.io/Week04-CodeQuiz/
 
 
 ## Assets
