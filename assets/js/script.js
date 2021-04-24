@@ -6,7 +6,6 @@ var startContainer = document.querySelector("#startContainer");
 var displayTimer = document.querySelector("#displayTimer");
 var saveHiScoreButton = document.querySelector("#saveHiScoreButton");
 var initials = document.querySelector("#initials");
-
 var restartQuizBtn = document.querySelector("#restartQuizBtn");
 var clearHiScoresBtn = document.querySelector("#clearHiScoresBtn");
 var txtOutHiScores = document.querySelector("#txtOutHiScores");
@@ -18,11 +17,40 @@ var score = 0;
 var hiScores = [];
 var scoreOut;
 
-// NOTE! I just noticed TODAY it was supposed to be JS questions, but thought I would keep it like this for your entertainment
+// Whoops! I just noticed TODAY it was supposed to be JS questions, but thought I would keep it like this for your entertainment
+// var questions = [
+//     {
+//         question: "What did fans name The Child?",
+//         choices: ["Baby Mandalorian", "Baby Jabba", "Baby Yoda", "Baby Groot"],
+//         answer: "Baby Yoda"
+//     },
+//     {
+//         question: "What is The Childs real name?",
+//         choices: ["Smeagol", "Rocket", "Chucky", "Grogu"],
+//         answer: "Grogu"
+//     },
+//     {
+//         question: "What is The Mandalorians name?",
+//         choices: ["Din Djarin", "Greef Karga", "Fennec Shand", "He has no name"],
+//         answer: "Din Djarin"
+//     },
+//     {
+//         question: "What is The Mandalorians armor made of?",
+//         choices: ["Carbonite", "Beskar", "Mithril", "Duriam"],
+//         answer: "Beskar"
+//     },
+//     {
+//         question: "What is the name of The Mandalorians ship?",
+//         choices: ["Razor Crest", "Millenium Falcon", "Enterprise", "Ebon Hawk"],
+//         answer: "Razor Crest"
+//     }
+// ];
+
+
 var questions = [
     {
         question: "What did fans name The Child?",
-        choices: ["Baby Mandalorian", "Baby Jabba", "Baby Yoda", "Baby Groot"],
+        choices: ["Baby Mandalorian", "Baby Jabba", "Baby Yoda"],
         answer: "Baby Yoda"
     },
     {
@@ -53,11 +81,13 @@ function startQuiz(event) {
     var timerInterval = setInterval(function () {
         secondsLeft--;
         displayTimer.textContent = secondsLeft;
+        // When time is up or all questions answered the quiz is over
         if (secondsLeft === 0 || qnum === questions.length) {
             clearInterval(timerInterval);
             clearButtons();
-            questionContainer.classList.add("hidden");   
+            questionContainer.classList.add("hidden");
             gameOverContainer.classList.remove("hidden");
+            displayTimer.textContent = "";
         };
     }, 1000);
     startContainer.classList.add("hidden");
@@ -75,7 +105,7 @@ function displayQuestion() {
             buttonContainer.appendChild(button);
         };
     } else {
-        questionContainer.classList.add("hidden");      
+        questionContainer.classList.add("hidden");
         gameOverContainer.classList.remove("hidden");
     }
 }
@@ -107,7 +137,11 @@ function clearScores() {
 //Save high score
 function saveHiScore(event) {
     event.preventDefault();
-    hiScores[hiScores.length] = initials.value + ": " + score;
+    if (initials.value !== "") {
+        hiScores[hiScores.length] = initials.value + ": " + score;
+    } else {
+        hiScores[hiScores.length] = "Anonymous: " + score;
+    }
     gameOverContainer.classList.add("hidden");
     hiScoresContainer.classList.remove("hidden");
     displayHiScores();
@@ -118,7 +152,7 @@ function displayHiScores() {
     clearScores();
     for (var i = 0; i < hiScores.length; i++) {
         scoreOut = document.createElement('p');
-        scoreOut.textContent = hiScores[i] + "/" + questions.length;        
+        scoreOut.textContent = hiScores[i] + "/" + questions.length;
         txtOutHiScores.appendChild(scoreOut);
     }
 }
@@ -134,7 +168,7 @@ function restartQuiz() {
     resetForNewQuiz();
 }
 
-//Reset all containers to original state
+//Reset all containers in prep for a restarting the quiz
 function resetForNewQuiz() {
     hiScoresContainer.classList.add("hidden");
     gameOverContainer.classList.add("hidden");
